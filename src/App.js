@@ -1,5 +1,6 @@
 import {Flex, Circle, Button} from '@chakra-ui/react'
 import { useState } from 'react';
+import Field from './Field'
 
 export default function App() {
 
@@ -25,18 +26,29 @@ export default function App() {
     }
     else if (event.buttons == 2) {
       deleteFild()
+      document.oncontextmenu = function(){return false}
     }
   }
 
-  const createFild = () => {
+  const createFild = (x, y) => {
     const newField = {
-      
+      positionX: x,
+      positionY: y
     }
+    setFields((prevState) => [...prevState, newField])
+  }
+
+  const deleteFild = () => {
+    
   }
 
   if (flagForMove) {
     changePosition()
   }
+
+  let item = fields.map(newField => <Field 
+    positionX = {newField.positionX - 58}
+    positionY = {newField.positionY - 10} />)
 
   return (
     <Flex
@@ -57,6 +69,7 @@ export default function App() {
         backgroundColor = 'rgb(0, 220, 255)'
       >
       </Circle>
+      {item}
     </Flex>
   );
 }
